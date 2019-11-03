@@ -1,64 +1,165 @@
 package ua.edu.ucu.collections.immutable;
 
+import javax.naming.spi.ObjectFactoryBuilder;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+
 public class ImmutableArrayList implements ImmutableList {
 
+    private int len;
+    private Object[] list;
+
+    //LIST INITIALISATION
+    ImmutableArrayList(Object[] lst) {
+        this.list = new Object[lst.length];
+        for (int i = 0; i < lst.length; i++){
+            this.list[i] = lst[i];
+        }
+        this.len = lst.length;
+    }
+
+    ImmutableArrayList(){
+        this.list = new Object[0];
+        this.len = 0;
+    }
+
+
     @Override
-    public ImmutableList add(Object e) {
-        return null;
+    public ImmutableArrayList add(Object e) {
+
+        Object[] lst = new Object[size() + 1];
+        System.arraycopy(this.list, 0, lst, 0, size());
+        lst[size()] = e;
+        return new ImmutableArrayList(lst);
+    }
+
+    private void checkIndex(int index){
+
+        if (index < 0 || index >= size()){
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     @Override
-    public ImmutableList add(int index, Object e) {
-        return null;
+    public ImmutableArrayList add(int index, Object e) {
+        checkIndex(index);
+        Object[] lst = new Object[size() + 1];
+        System.arraycopy(this.list, 0, lst, 0, index);
+        lst[index] = e;
+        if (size() - index >= 0) System.arraycopy(list, index, lst, index + 1, size() - index);
+        return new ImmutableArrayList(lst);
     }
 
     @Override
-    public ImmutableList addAll(Object[] c) {
-        return null;
+    public ImmutableArrayList addAll(Object[] c) {
+        Object[] lst = new Object[size() + c.length];
+        System.arraycopy(this.list, 0, lst, 0, size());
+        int i = size();
+        for (Object el: c){
+            lst[i] = el;
+            i++;
+        }
+        return  new ImmutableArrayList(lst);
     }
 
     @Override
-    public ImmutableList addAll(int index, Object[] c) {
-        return null;
+    public ImmutableArrayList addAll(int index, Object[] c) {
+        checkIndex(index);
+        Object[] lst = new Object[size() + c.length];
+        System.arraycopy(this.list, 0, lst, 0, index);
+        int i = index;
+        for (Object el: c){
+
+            lst[i] = el;
+            i++;
+        }
+
+        for (int k = index; k < size(); k++){
+            lst[i] = this.list[k];
+            i++;
+        }
+        return new ImmutableArrayList(lst);
     }
 
     @Override
     public Object get(int index) {
-        return null;
+        checkIndex(index);
+        return this.list[index];
     }
 
     @Override
-    public ImmutableList remove(int index) {
-        return null;
+    public ImmutableArrayList remove(int index) {
+        checkIndex(index);
+        Object[] lst = new Object[size() - 1];
+        if (index > 0) {
+            System.arraycopy(this.list, 0, lst, 0, index);
+        }
+        if (size() - 1 - index >= 0) System.arraycopy(this.list, index + 1, lst, index, size() - 1 - index);
+
+        return new ImmutableArrayList(lst);
     }
 
     @Override
-    public ImmutableList set(int index, Object e) {
-        return null;
+    public ImmutableArrayList set(int index, Object e) {
+        checkIndex(index);
+        ImmutableArrayList copy = new ImmutableArrayList(this.list);
+        copy.list[index] = e;
+        return copy;
     }
 
     @Override
     public int indexOf(Object e) {
-        return 0;
+        for (int i = 0; i < size(); i++){
+            if (list[i] == e){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.len;
     }
 
     @Override
-    public ImmutableList clear() {
-        return null;
+    public ImmutableArrayList clear() {
+        return new ImmutableArrayList();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.len == 0;
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] lst= new Object[size()];
+
+        for (int i = 0; i < size(); i++){
+            lst[i] = this.list[i];
+        }
+
+        return lst;
+    }
+
+    @Override
+    public String toString() {
+        if (size() != 0) {
+            String toReturn;
+            int k = 0;
+            StringBuilder toReturnBuilder = new StringBuilder();
+            for (int i = 0; i < size() - 1; i++) {
+                toReturnBuilder.append(this.list[i]);
+                toReturnBuilder.append(", ");
+                k = i + 1;
+            }
+            toReturn = toReturnBuilder.toString();
+            toReturn += this.list[k];
+            return toReturn;
+        }
+        else {
+            return "";
+        }
     }
 }

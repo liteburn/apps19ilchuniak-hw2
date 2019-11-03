@@ -29,19 +29,49 @@ public class ImmutableLinkedList implements ImmutableList {
 
     //LINKEDLIST INITIALISATION
     private ImmutableLinkedList(ImmutableLinkedList element) {
-        this.head = new Node(element.head);
+
+        this.head = null;
+        this.tail = null;
         Node copyFrom = element.head;
-        Node copyTo = this.head;
         this.len = element.len;
-        while (copyFrom.next != null) {
-            copyTo.next = copyFrom.next;
-            copyTo = copyTo.next;
+        while (copyFrom != null) {
+            if (this.head == null) {
+                this.head = new Node(copyFrom.data);
+                this.tail = this.head;
+            } else {
+                this.tail.next = new Node(copyFrom.data);
+                this.tail.next.prev = this.tail;
+                this.tail = this.tail.next;
+            }
             copyFrom = copyFrom.next;
         }
-        this.tail = copyTo;
     }
 
-    private ImmutableLinkedList() {
+    public ImmutableLinkedList(Object[] lst) {
+        if (lst.length > 0) {
+            this.head = new Node(lst[0]);
+            this.tail = this.head;
+            this.len = 1;
+            for (Object el : lst) {
+                if (size() != 1) {
+                    this.tail.next = new Node(el);
+                    this.tail = this.tail.next;
+                }
+                this.len += 1;
+            }
+        } else {
+            this.head = null;
+            this.len = 0;
+        }
+    }
+
+    public ImmutableLinkedList(Object elem) {
+        this.head = new Node(elem);
+        this.tail = this.head;
+        this.len = 1;
+    }
+
+    public ImmutableLinkedList() {
         this.head = null;
         this.len = 0;
         this.tail = null;
@@ -52,6 +82,7 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList addFirst(Object e) {
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
         newone.head = new Node(e);
+        newone.tail = newone.head;
         newone.len += 1;
         return newone;
     }
@@ -59,6 +90,7 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList addLast(Object e) {
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
         newone.tail.next = new Node(e);
+        newone.tail.next.prev = newone.tail;
         newone.tail = newone.tail.next;
         newone.len += 1;
         return newone;
@@ -68,6 +100,7 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList add(Object e) {
 
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
+
         if (newone.size() == 0) {
             return addFirst(e);
         } else {
@@ -94,7 +127,7 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList add(int index, Object e) {
+    public ImmutableLinkedList add(int index, Object e) {
 
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
         Node change = getNode(newone, index);
@@ -106,7 +139,7 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList addAll(Object[] c) {
+    public ImmutableLinkedList addAll(Object[] c) {
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
 
         for (Object el : c) {
@@ -116,7 +149,7 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList addAll(int index, Object[] c) {
+    public ImmutableLinkedList addAll(int index, Object[] c) {
 
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
         Node change = getNode(newone, index);
@@ -132,14 +165,14 @@ public class ImmutableLinkedList implements ImmutableList {
 
     }
 
-    public Object getFirst(){
+    public Object getFirst() {
         checkIndex(0);
-        return getNode(this, 0).data;
+        return this.head.data;
     }
 
-    public Object getLast(){
+    public Object getLast() {
         checkIndex(0);
-        return getNode(this, size()).data;
+        return this.tail.data;
     }
 
     @Override
@@ -149,40 +182,53 @@ public class ImmutableLinkedList implements ImmutableList {
 
 
     @Override
-    public ImmutableList remove(int index) {
+    public ImmutableLinkedList remove(int index) {
         checkIndex(index);
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
-        Node el = getNode(newone, index);
-        if (el.next != null) {
-            el.next.prev = el.prev;
+        if (size() == 1) {
+            return new ImmutableLinkedList();
         }
-        el.prev.next = el.next;
-        newone.len -= 1;
+        if (index == 0) {
+            newone = newone.removeFirst();
+        } else if (index == size() - 1) {
+            newone = newone.removeLast();
+        } else {
+            Node el = getNode(newone, index);
+            el.prev.next = el.next;
+            el.next.prev = el.prev;
+            newone.len -= 1;
+        }
         return newone;
     }
 
-    public ImmutableLinkedList removeFirst(){
+    public ImmutableLinkedList removeFirst() {
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
-        newone.head = this.head.next;
+        newone.head = newone.head.next;
         newone.len -= 1;
-        if (newone.len == 0){
-            newone.tail = null;
+        if (newone.head != null) {
+            newone.head.prev = null;
+        } else {
+            this.tail = null;
         }
         return newone;
     }
-    public ImmutableLinkedList removeLast(){
+
+    public ImmutableLinkedList removeLast() {
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
-        newone.tail =newone.tail.prev;
+        newone.tail = newone.tail.prev;
         newone.len -= 1;
-        if (newone.len == 0){
-            newone.head = null;
+        if (newone.tail != null) {
+            newone.tail.next = null;
+        } else {
+            this.head = null;
         }
+
         return newone;
     }
 
 
     @Override
-    public ImmutableList set(int index, Object e) {
+    public ImmutableLinkedList set(int index, Object e) {
         checkIndex(index);
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
         Node el = getNode(newone, index);
@@ -194,7 +240,7 @@ public class ImmutableLinkedList implements ImmutableList {
     public int indexOf(Object e) {
         Node getting = this.head;
         int i = 0;
-        while (getting.data != null) {
+        while (getting != null) {
             if (getting.data == e) {
                 return i;
             }
@@ -210,9 +256,8 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList clear() {
-        ImmutableLinkedList newone = new ImmutableLinkedList();
-        return null;
+    public ImmutableLinkedList clear() {
+        return new ImmutableLinkedList();
     }
 
     @Override
@@ -222,12 +267,18 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public Object[] toArray() {
-        Object[] toReturn = new Object[size()];
-        Node a = this.head;
-        for (int i = 0; i < size(); i++) {
-            toReturn[i] = a.data;
-            a = a.next;
+        if (size() == 0) {
+            return new Object[]{};
         }
+        Object[] toReturn = new Object[size()];
+
+        Node from = this.head;
+
+        for (int i = 0; i < size(); i++) {
+            toReturn[i] = from.data;
+            from = from.next;
+        }
+
         return toReturn;
     }
 
@@ -236,10 +287,13 @@ public class ImmutableLinkedList implements ImmutableList {
         Node a = this.head;
         StringBuilder toReturn = new StringBuilder();
         for (int i = 0; i < size() - 1; i++) {
-            toReturn.append((String) a.data);
+            toReturn.append(a.data);
             toReturn.append(", ");
+            a = a.next;
         }
-        toReturn.append((String) a.next.data);
+        if (this.size() > 0) {
+            toReturn.append(this.getLast());
+        }
         return toReturn.toString();
     }
 
