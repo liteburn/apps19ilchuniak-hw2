@@ -207,7 +207,7 @@ public class ImmutableLinkedList implements ImmutableList {
         if (newone.head != null) {
             newone.head.prev = null;
         } else {
-            this.tail = null;
+            newone.tail = null;
         }
         return newone;
     }
@@ -219,7 +219,7 @@ public class ImmutableLinkedList implements ImmutableList {
         if (newone.tail != null) {
             newone.tail.next = null;
         } else {
-            this.head = null;
+            newone.head = null;
         }
 
         return newone;
