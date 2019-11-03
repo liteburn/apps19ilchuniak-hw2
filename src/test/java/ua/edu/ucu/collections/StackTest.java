@@ -1,6 +1,7 @@
 package ua.edu.ucu.collections;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class StackTest {
@@ -11,7 +12,7 @@ public class StackTest {
     private Object[] lst1 = {};
     private Stack stack4 = new Stack(lst1);
 
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testPeekEmpty() {
         stack1.peek();
     }
@@ -27,13 +28,13 @@ public class StackTest {
     }
 
     @Test
-    public void testPop(){
+    public void testPop() {
         assertSame(stack3.pop(), 'c');
         assertSame(stack3.peek(), stack3.pop());
     }
 
     @Test
-    public void testPush(){
+    public void testPush() {
         stack1.push('z');
         assertSame('z', stack1.peek());
         assertSame(stack1.peek(), stack1.pop());

@@ -8,13 +8,13 @@ public class ImmutableArrayList implements ImmutableList {
     //LIST INITIALISATION
     ImmutableArrayList(Object[] lst) {
         this.list = new Object[lst.length];
-        for (int i = 0; i < lst.length; i++){
+        for (int i = 0; i < lst.length; i++) {
             this.list[i] = lst[i];
         }
         this.len = lst.length;
     }
 
-    ImmutableArrayList(){
+    ImmutableArrayList() {
         this.list = new Object[0];
         this.len = 0;
     }
@@ -29,9 +29,9 @@ public class ImmutableArrayList implements ImmutableList {
         return new ImmutableArrayList(lst);
     }
 
-    private void checkIndex(int index){
+    private void checkIndex(int index) {
 
-        if (index < 0 || index >= size()){
+        if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -42,7 +42,7 @@ public class ImmutableArrayList implements ImmutableList {
         Object[] lst = new Object[size() + 1];
         System.arraycopy(this.list, 0, lst, 0, index);
         lst[index] = e;
-        if (size() - index >= 0) System.arraycopy(list, index, lst, index + 1, size() - index);
+        System.arraycopy(list, index, lst, index + 1, size() - index);
         return new ImmutableArrayList(lst);
     }
 
@@ -51,11 +51,11 @@ public class ImmutableArrayList implements ImmutableList {
         Object[] lst = new Object[size() + c.length];
         System.arraycopy(this.list, 0, lst, 0, size());
         int i = size();
-        for (Object el: c){
+        for (Object el : c) {
             lst[i] = el;
             i++;
         }
-        return  new ImmutableArrayList(lst);
+        return new ImmutableArrayList(lst);
     }
 
     @Override
@@ -64,13 +64,13 @@ public class ImmutableArrayList implements ImmutableList {
         Object[] lst = new Object[size() + c.length];
         System.arraycopy(this.list, 0, lst, 0, index);
         int i = index;
-        for (Object el: c){
+        for (Object el : c) {
 
             lst[i] = el;
             i++;
         }
 
-        for (int k = index; k < size(); k++){
+        for (int k = index; k < size(); k++) {
             lst[i] = this.list[k];
             i++;
         }
@@ -87,10 +87,8 @@ public class ImmutableArrayList implements ImmutableList {
     public ImmutableArrayList remove(int index) {
         checkIndex(index);
         Object[] lst = new Object[size() - 1];
-        if (index > 0) {
-            System.arraycopy(this.list, 0, lst, 0, index);
-        }
-        if (size() - 1 - index >= 0) System.arraycopy(this.list, index + 1, lst, index, size() - 1 - index);
+        System.arraycopy(this.list, 0, lst, 0, index);
+        System.arraycopy(this.list, index + 1, lst, index, size() - 1 - index);
 
         return new ImmutableArrayList(lst);
     }
@@ -105,8 +103,8 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public int indexOf(Object e) {
-        for (int i = 0; i < size(); i++){
-            if (list[i] == e){
+        for (int i = 0; i < size(); i++) {
+            if (list[i] == e) {
                 return i;
             }
         }
@@ -130,9 +128,9 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public Object[] toArray() {
-        Object[] lst= new Object[size()];
+        Object[] lst = new Object[size()];
 
-        for (int i = 0; i < size(); i++){
+        for (int i = 0; i < size(); i++) {
             lst[i] = this.list[i];
         }
 
@@ -153,8 +151,7 @@ public class ImmutableArrayList implements ImmutableList {
             toReturn = toReturnBuilder.toString();
             toReturn += this.list[k];
             return toReturn;
-        }
-        else {
+        } else {
             return "";
         }
     }

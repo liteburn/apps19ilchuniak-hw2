@@ -51,7 +51,7 @@ public class ImmutableLinkedList implements ImmutableList {
         if (lst.length > 0) {
             this.head = new Node(lst[0]);
             this.tail = this.head;
-            this.len = 1;
+            this.len = 0;
             for (Object el : lst) {
                 if (size() != 1) {
                     this.tail.next = new Node(el);
@@ -150,7 +150,6 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
-
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
         Node change = getNode(newone, index);
         int i = 0;
@@ -162,8 +161,8 @@ public class ImmutableLinkedList implements ImmutableList {
         }
 
         return newone;
-
     }
+
 
     public Object getFirst() {
         checkIndex(0);
@@ -186,6 +185,7 @@ public class ImmutableLinkedList implements ImmutableList {
         checkIndex(index);
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
         if (size() == 1) {
+
             return new ImmutableLinkedList();
         }
         if (index == 0) {

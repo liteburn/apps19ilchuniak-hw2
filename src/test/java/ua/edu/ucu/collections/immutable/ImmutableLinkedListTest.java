@@ -1,6 +1,7 @@
 package ua.edu.ucu.collections.immutable;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class ImmutableLinkedListTest {
@@ -10,8 +11,8 @@ public class ImmutableLinkedListTest {
     private Object[] lst = {'s', '3', 'a', 'G', 'R'};
     private ImmutableLinkedList arr3 = arr1.addAll(lst);
 
-    @Test (expected = IndexOutOfBoundsException.class)
-    public void testAddException(){
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testAddException() {
         ImmutableLinkedList arr = arr1.add(0, 4);
     }
 
@@ -26,9 +27,9 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
-    public void testAdd2(){
+    public void testAdd2() {
         ImmutableLinkedList arr2 = arr1.add('3');
-        arr2 = arr2.add(0,4);
+        arr2 = arr2.add(0, 4);
         Object[] checker = {4, '3'};
         assertArrayEquals(checker, arr2.toArray());
         arr2 = arr2.addAll(checker);
@@ -39,17 +40,17 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
-    public void testAddAll(){
+    public void testAddAll() {
         ImmutableLinkedList arr2 = arr1.add('4');
         arr2 = arr2.add('s');
-        Object[] toAdd= {3, 't', 'i'};
+        Object[] toAdd = {3, 't', 'i'};
         ImmutableLinkedList arr3 = arr2.addAll(1, toAdd);
         Object[] compare = {'4', 3, 't', 'i', 's'};
         assertArrayEquals(compare, arr3.toArray());
     }
 
     @Test
-    public void testGet(){
+    public void testGet() {
         ImmutableLinkedList arr2 = arr1.add('s');
         assertSame(arr2.get(0), 's');
         arr2 = arr2.add('m');
@@ -57,7 +58,7 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
-    public void testRemove(){
+    public void testRemove1() {
         ImmutableLinkedList arr2 = arr1.add('1');
         arr2 = arr2.add('s');
         assertEquals(2, arr2.size(), 0.0001);
@@ -68,23 +69,36 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
-    public void testSet(){
+    public void testRemove2() {
+        ImmutableLinkedList arr = new ImmutableLinkedList('m');
+        assertTrue(arr.remove(0).isEmpty());
+    }
+
+    @Test
+    public void testRemove3() {
+        Object[] lst = {'m', 'r'};
+        ImmutableLinkedList arr = new ImmutableLinkedList(lst);
+        assertEquals('m', arr.remove(1).getFirst());
+    }
+
+    @Test
+    public void testSet() {
         arr3 = arr3.set(3, "EZ");
         assertSame("EZ", arr3.get(3));
     }
 
     @Test
-    public void testIndexOf(){
+    public void testIndexOf() {
         assertSame(2, arr3.indexOf('a'));
     }
 
     @Test
-    public void testIndexOfNotInList(){
+    public void testIndexOfNotInList() {
         assertSame(-1, arr3.indexOf('p'));
     }
 
     @Test
-    public void testClear(){
+    public void testClear() {
         ImmutableLinkedList cleaned = arr3.clear();
         Object[] checker = {};
         assertArrayEquals(checker, cleaned.toArray());
@@ -93,7 +107,7 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
-    public void testAllOther(){
+    public void testAllOther() {
         assertSame(arr3.getFirst(), 's');
         ImmutableLinkedList arr4 = arr3.removeLast();
         Object[] correct = {'s', '3', 'a', 'G'};
