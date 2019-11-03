@@ -1,9 +1,5 @@
 package ua.edu.ucu.collections.immutable;
 
-import javax.naming.spi.ObjectFactoryBuilder;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-
 public class ImmutableArrayList implements ImmutableList {
 
     private int len;

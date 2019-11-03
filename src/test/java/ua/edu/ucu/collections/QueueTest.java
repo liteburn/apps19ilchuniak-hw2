@@ -2,8 +2,6 @@ package ua.edu.ucu.collections;
 
 import org.junit.Test;
 
-import javax.print.attribute.standard.MediaSize;
-
 import static org.junit.Assert.*;
 
 public class QueueTest {
