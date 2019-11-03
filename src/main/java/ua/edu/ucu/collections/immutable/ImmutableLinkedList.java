@@ -3,9 +3,9 @@ package ua.edu.ucu.collections.immutable;
 public class ImmutableLinkedList implements ImmutableList {
 
     private static class Node {
-        Object data;
-        Node next;
-        Node prev;
+        private Object data;
+        private Node next;
+        private Node prev;
 
         //NODE INITIALISATION
         Node(Object elem, Node next, Node prev) {
