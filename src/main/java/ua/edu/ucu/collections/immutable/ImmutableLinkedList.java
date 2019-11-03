@@ -152,7 +152,6 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList addAll(int index, Object[] c) {
         ImmutableLinkedList newone = new ImmutableLinkedList(this);
         Node change = getNode(newone, index);
-        int i = 0;
         for (Object el : c) {
             change.next = new Node(change.data, change.next, change);
             change.data = el;
