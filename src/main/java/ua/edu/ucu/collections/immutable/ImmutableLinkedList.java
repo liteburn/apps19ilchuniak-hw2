@@ -188,7 +188,7 @@ public class ImmutableLinkedList implements ImmutableList {
         checkIndex(index);
         Object[] copyFrom = toArray();
         Object[] creatFrom = new Object[len - 1];
-        if (index >= 0) System.arraycopy(copyFrom, 0, creatFrom, 0, index);
+        System.arraycopy(copyFrom, 0, creatFrom, 0, index);
         //Don't know why, but if do through syscopy i will get error.
         for (int i = index + 1; i < len; i++) {
             creatFrom[i - 1] = copyFrom[i];
