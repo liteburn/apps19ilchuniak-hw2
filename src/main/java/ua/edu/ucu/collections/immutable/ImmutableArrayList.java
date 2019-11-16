@@ -1,7 +1,5 @@
 package ua.edu.ucu.collections.immutable;
 
-import java.util.Arrays;
-
 public class ImmutableArrayList implements ImmutableList {
 
     private int len;
@@ -47,10 +45,11 @@ public class ImmutableArrayList implements ImmutableList {
     }
 
     private Object[] addElems(Object[] lst, int index, Object[] copyFrom) {
+        int i = index;
         for (Object el : copyFrom) {
 
-            lst[index] = el;
-            index++;
+            lst[i] = el;
+            i++;
         }
         return lst;
     }

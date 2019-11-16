@@ -1,8 +1,5 @@
 package ua.edu.ucu.collections.immutable;
 
-import java.sql.Array;
-import java.util.Arrays;
-
 public class ImmutableLinkedList implements ImmutableList {
 
     private static class Node {
@@ -54,13 +51,13 @@ public class ImmutableLinkedList implements ImmutableList {
             head = new Node(lst[0]);
             tail = head;
             len = 0;
-            int to_start = 0;
+            int toStart = 0;
             for (Object el : lst) {
-                if (to_start == 1) {
+                if (toStart == 1) {
                     tail.next = new Node(el);
                     tail = tail.next;
                 } else {
-                    to_start = 1;
+                    toStart = 1;
                 }
                 len += 1;
             }
@@ -164,7 +161,8 @@ public class ImmutableLinkedList implements ImmutableList {
         Object[] copyFrom = toArray();
         System.arraycopy(copyFrom, 0, toCreate, 0, index);
         System.arraycopy(c, 0, toCreate, index, c.length);
-        System.arraycopy(copyFrom, index, toCreate, index + c.length, copyFrom.length - index);
+        System.arraycopy(copyFrom, index, toCreate, index + c.length,
+                copyFrom.length - index);
         return new ImmutableLinkedList(toCreate);
     }
 
@@ -192,7 +190,7 @@ public class ImmutableLinkedList implements ImmutableList {
         Object[] creatFrom = new Object[len - 1];
         if (index >= 0) System.arraycopy(copyFrom, 0, creatFrom, 0, index);
         //Don't know why, but if do through syscopy i will get error.
-        for (int i = index + 1; i < len; i++){
+        for (int i = index + 1; i < len; i++) {
             creatFrom[i - 1] = copyFrom[i];
         }
         return new ImmutableLinkedList(creatFrom);
