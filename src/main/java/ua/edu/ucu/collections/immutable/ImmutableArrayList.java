@@ -36,7 +36,7 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList add(int index, Object e) {
-        if (index == size()){
+        if (index == size()) {
             return add(e);
         }
         checkIndex(index);
@@ -67,7 +67,7 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList addAll(int index, Object[] c) {
-        if (index == size()){
+        if (index == size()) {
             return addAll(c);
         }
         checkIndex(index);

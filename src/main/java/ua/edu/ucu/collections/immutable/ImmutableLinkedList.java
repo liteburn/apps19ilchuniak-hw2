@@ -161,7 +161,7 @@ public class ImmutableLinkedList implements ImmutableList {
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
         if (index == size()) {
-            addAll(c);
+            return addAll(c);
         }
         checkIndex(index);
         Object[] toCreate = new Object[c.length + this.size()];
