@@ -12,7 +12,7 @@ public class ImmutableArrayListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testAddException() {
-        ImmutableArrayList arr = arr1.add(0, 4);
+        ImmutableArrayList arr = arr1.add(1, 4);
     }
 
     @Test

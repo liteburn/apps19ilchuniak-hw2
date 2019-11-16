@@ -13,7 +13,7 @@ public class ImmutableLinkedListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testAddException() {
-        ImmutableLinkedList arr = arr1.add(0, 4);
+        ImmutableLinkedList arr = arr1.add(1, 4);
     }
 
     @Test

@@ -135,6 +135,9 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList add(int index, Object e) {
+        if (index == size()) {
+            return addLast(e);
+        }
         checkIndex(index);
         ImmutableLinkedList newone = copyOf();
         Node change = getNode(newone, index);
@@ -157,6 +160,10 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
+        if (index == size()) {
+            addAll(c);
+        }
+        checkIndex(index);
         Object[] toCreate = new Object[c.length + this.size()];
         Object[] copyFrom = toArray();
         System.arraycopy(copyFrom, 0, toCreate, 0, index);

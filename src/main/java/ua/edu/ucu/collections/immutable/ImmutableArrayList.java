@@ -6,15 +6,15 @@ public class ImmutableArrayList implements ImmutableList {
     private Object[] list;
 
     //LIST INITIALISATION
-    ImmutableArrayList(Object[] lst) {
-        this.list = new Object[lst.length];
+    public ImmutableArrayList(Object[] lst) {
+        list = new Object[lst.length];
         System.arraycopy(lst, 0, this.list, 0, lst.length);
-        this.len = lst.length;
+        len = lst.length;
     }
 
-    ImmutableArrayList() {
-        this.list = new Object[0];
-        this.len = 0;
+    public ImmutableArrayList() {
+        list = new Object[0];
+        len = 0;
     }
 
 
@@ -36,6 +36,9 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList add(int index, Object e) {
+        if (index == size()){
+            return add(e);
+        }
         checkIndex(index);
         Object[] lst = new Object[size() + 1];
         System.arraycopy(this.list, 0, lst, 0, index);
@@ -64,6 +67,9 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList addAll(int index, Object[] c) {
+        if (index == size()){
+            return addAll(c);
+        }
         checkIndex(index);
         Object[] lst = new Object[size() + c.length];
         System.arraycopy(this.list, 0, lst, 0, index);
