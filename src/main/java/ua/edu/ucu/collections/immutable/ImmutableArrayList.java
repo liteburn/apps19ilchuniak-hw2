@@ -1,5 +1,7 @@
 package ua.edu.ucu.collections.immutable;
 
+import java.util.Arrays;
+
 public class ImmutableArrayList implements ImmutableList {
 
     private int len;
@@ -8,9 +10,7 @@ public class ImmutableArrayList implements ImmutableList {
     //LIST INITIALISATION
     ImmutableArrayList(Object[] lst) {
         this.list = new Object[lst.length];
-        for (int i = 0; i < lst.length; i++) {
-            this.list[i] = lst[i];
-        }
+        System.arraycopy(lst, 0, this.list, 0, lst.length);
         this.len = lst.length;
     }
 
@@ -46,16 +46,21 @@ public class ImmutableArrayList implements ImmutableList {
         return new ImmutableArrayList(lst);
     }
 
+    private Object[] addElems(Object[] lst, int index, Object[] copyFrom) {
+        for (Object el : copyFrom) {
+
+            lst[index] = el;
+            index++;
+        }
+        return lst;
+    }
+
     @Override
     public ImmutableArrayList addAll(Object[] c) {
         Object[] lst = new Object[size() + c.length];
         System.arraycopy(this.list, 0, lst, 0, size());
-        int i = size();
-        for (Object el : c) {
-            lst[i] = el;
-            i++;
-        }
-        return new ImmutableArrayList(lst);
+
+        return new ImmutableArrayList(addElems(lst, size(), c));
     }
 
     @Override
@@ -63,19 +68,13 @@ public class ImmutableArrayList implements ImmutableList {
         checkIndex(index);
         Object[] lst = new Object[size() + c.length];
         System.arraycopy(this.list, 0, lst, 0, index);
-        int i = index;
-        for (Object el : c) {
-
-            lst[i] = el;
-            i++;
-        }
-
+        addElems(lst, index, c);
         for (int k = index; k < size(); k++) {
-            lst[i] = this.list[k];
-            i++;
+            lst[k + c.length] = this.list[k];
         }
         return new ImmutableArrayList(lst);
     }
+
 
     @Override
     public Object get(int index) {
