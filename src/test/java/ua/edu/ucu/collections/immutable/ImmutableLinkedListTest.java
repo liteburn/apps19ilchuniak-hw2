@@ -47,6 +47,9 @@ public class ImmutableLinkedListTest {
         ImmutableLinkedList arr3 = arr2.addAll(1, toAdd);
         Object[] compare = {'4', 3, 't', 'i', 's'};
         assertArrayEquals(compare, arr3.toArray());
+        ImmutableLinkedList arr4 = arr2.addAll(2, toAdd);
+        Object[] compare1 = {'4', 's', 3, 't', 'i'};
+        assertArrayEquals(compare1, arr4.toArray());
     }
 
     @Test

@@ -69,9 +69,9 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     public ImmutableLinkedList(Object elem) {
-        this.head = new Node(elem);
-        this.tail = this.head;
-        this.len = 1;
+        head = new Node(elem);
+        tail = this.head;
+        len = 1;
     }
 
     public ImmutableLinkedList() {
@@ -164,7 +164,7 @@ public class ImmutableLinkedList implements ImmutableList {
             return addAll(c);
         }
         checkIndex(index);
-        Object[] toCreate = new Object[c.length + this.size()];
+        Object[] toCreate = new Object[c.length + size()];
         Object[] copyFrom = toArray();
         System.arraycopy(copyFrom, 0, toCreate, 0, index);
         System.arraycopy(c, 0, toCreate, index, c.length);
@@ -176,12 +176,12 @@ public class ImmutableLinkedList implements ImmutableList {
 
     public Object getFirst() {
         checkIndex(0);
-        return this.head.data;
+        return head.data;
     }
 
     public Object getLast() {
         checkIndex(0);
-        return this.tail.data;
+        return tail.data;
     }
 
     @Override
@@ -240,7 +240,7 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public int indexOf(Object e) {
-        Node getting = this.head;
+        Node getting = head;
         int i = 0;
         while (getting != null) {
             if (getting.data == e) {
@@ -254,7 +254,7 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public int size() {
-        return this.len;
+        return len;
     }
 
     @Override
@@ -274,7 +274,7 @@ public class ImmutableLinkedList implements ImmutableList {
         }
         Object[] toReturn = new Object[size()];
 
-        Node from = this.head;
+        Node from = head;
 
         for (int i = 0; i < size(); i++) {
             toReturn[i] = from.data;
@@ -285,7 +285,7 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public String toString() {
-        Node a = this.head;
+        Node a = head;
         StringBuilder toReturn = new StringBuilder();
         for (int i = 0; i < size() - 1; i++) {
             toReturn.append(a.data);
@@ -293,7 +293,7 @@ public class ImmutableLinkedList implements ImmutableList {
             a = a.next;
         }
         if (this.size() > 0) {
-            toReturn.append(this.getLast());
+            toReturn.append(getLast());
         }
         return toReturn.toString();
     }

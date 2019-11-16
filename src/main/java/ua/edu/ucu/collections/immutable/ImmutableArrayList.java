@@ -22,7 +22,7 @@ public class ImmutableArrayList implements ImmutableList {
     public ImmutableArrayList add(Object e) {
 
         Object[] lst = new Object[size() + 1];
-        System.arraycopy(this.list, 0, lst, 0, size());
+        System.arraycopy(list, 0, lst, 0, size());
         lst[size()] = e;
         return new ImmutableArrayList(lst);
     }
@@ -41,7 +41,7 @@ public class ImmutableArrayList implements ImmutableList {
         }
         checkIndex(index);
         Object[] lst = new Object[size() + 1];
-        System.arraycopy(this.list, 0, lst, 0, index);
+        System.arraycopy(list, 0, lst, 0, index);
         lst[index] = e;
         System.arraycopy(list, index, lst, index + 1, size() - index);
         return new ImmutableArrayList(lst);
@@ -72,10 +72,10 @@ public class ImmutableArrayList implements ImmutableList {
         }
         checkIndex(index);
         Object[] lst = new Object[size() + c.length];
-        System.arraycopy(this.list, 0, lst, 0, index);
+        System.arraycopy(list, 0, lst, 0, index);
         addElems(lst, index, c);
         for (int k = index; k < size(); k++) {
-            lst[k + c.length] = this.list[k];
+            lst[k + c.length] = list[k];
         }
         return new ImmutableArrayList(lst);
     }
@@ -84,15 +84,15 @@ public class ImmutableArrayList implements ImmutableList {
     @Override
     public Object get(int index) {
         checkIndex(index);
-        return this.list[index];
+        return list[index];
     }
 
     @Override
     public ImmutableArrayList remove(int index) {
         checkIndex(index);
         Object[] lst = new Object[size() - 1];
-        System.arraycopy(this.list, 0, lst, 0, index);
-        System.arraycopy(this.list, index + 1, lst, index, size() - 1 - index);
+        System.arraycopy(list, 0, lst, 0, index);
+        System.arraycopy(list, index + 1, lst, index, size() - 1 - index);
 
         return new ImmutableArrayList(lst);
     }
@@ -100,7 +100,7 @@ public class ImmutableArrayList implements ImmutableList {
     @Override
     public ImmutableArrayList set(int index, Object e) {
         checkIndex(index);
-        ImmutableArrayList copy = new ImmutableArrayList(this.list);
+        ImmutableArrayList copy = new ImmutableArrayList(list);
         copy.list[index] = e;
         return copy;
     }
@@ -117,7 +117,7 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public int size() {
-        return this.len;
+        return len;
     }
 
     @Override
@@ -127,7 +127,7 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public boolean isEmpty() {
-        return this.len == 0;
+        return len == 0;
     }
 
     @Override
@@ -135,7 +135,7 @@ public class ImmutableArrayList implements ImmutableList {
         Object[] lst = new Object[size()];
 
         for (int i = 0; i < size(); i++) {
-            lst[i] = this.list[i];
+            lst[i] = list[i];
         }
 
         return lst;
@@ -148,12 +148,12 @@ public class ImmutableArrayList implements ImmutableList {
             int k = 0;
             StringBuilder toReturnBuilder = new StringBuilder();
             for (int i = 0; i < size() - 1; i++) {
-                toReturnBuilder.append(this.list[i]);
+                toReturnBuilder.append(list[i]);
                 toReturnBuilder.append(", ");
                 k = i + 1;
             }
             toReturn = toReturnBuilder.toString();
-            toReturn += this.list[k];
+            toReturn += list[k];
             return toReturn;
         } else {
             return "";
