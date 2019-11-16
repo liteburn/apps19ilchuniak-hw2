@@ -8,7 +8,7 @@ public class ImmutableArrayList implements ImmutableList {
     //LIST INITIALISATION
     public ImmutableArrayList(Object[] lst) {
         list = new Object[lst.length];
-        System.arraycopy(lst, 0, this.list, 0, lst.length);
+        System.arraycopy(lst, 0, list, 0, lst.length);
         len = lst.length;
     }
 
@@ -60,7 +60,7 @@ public class ImmutableArrayList implements ImmutableList {
     @Override
     public ImmutableArrayList addAll(Object[] c) {
         Object[] lst = new Object[size() + c.length];
-        System.arraycopy(this.list, 0, lst, 0, size());
+        System.arraycopy(list, 0, lst, 0, size());
 
         return new ImmutableArrayList(addElems(lst, size(), c));
     }

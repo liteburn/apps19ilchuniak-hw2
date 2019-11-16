@@ -70,7 +70,7 @@ public class ImmutableLinkedList implements ImmutableList {
 
     public ImmutableLinkedList(Object elem) {
         head = new Node(elem);
-        tail = this.head;
+        tail = head;
         len = 1;
     }
 
@@ -292,7 +292,7 @@ public class ImmutableLinkedList implements ImmutableList {
             toReturn.append(", ");
             a = a.next;
         }
-        if (this.size() > 0) {
+        if (size() > 0) {
             toReturn.append(getLast());
         }
         return toReturn.toString();
